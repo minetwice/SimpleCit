@@ -1,1 +1,12 @@
-
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.example.simplecit.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ItemRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
