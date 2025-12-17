@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7'
+    id 'fabric-loom' version '1.13' // वर्जन 1.7 से अपडेट किया गया
     id 'java'
 }
 
