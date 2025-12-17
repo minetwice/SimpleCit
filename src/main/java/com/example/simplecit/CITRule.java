@@ -18,13 +18,11 @@ public class CITRule {
     public boolean matches(Item item, NbtCompound nbt) {
         if (!items.contains(item)) return false;
 
-        // Handle NBT safely
         if (requiredNamePattern != null && nbt != null) {
             NbtCompound display = nbt.getCompound("display");
-            // ✅ SAFETY: Check if "display" compound exists AND has "Name"
-            if (display != null && display.contains("Name", 8)) {
+            if (display.contains("Name", 8)) {
                 try {
-                    Text name = Text.Serializer.fromJson(display.getString("Name"));
+                    Text name = Text.Serialization.fromJson(display.getString("Name"), null);
                     if (name != null) {
                         String nameStr = name.getString();
                         return Pattern.compile(requiredNamePattern, Pattern.CASE_INSENSITIVE)
@@ -47,8 +45,12 @@ public class CITRule {
         if (itemsStr != null) {
             for (String id : itemsStr.split(",")) {
                 Identifier itemId = Identifier.tryParse(id.trim());
-                Item item = Registries.ITEM.getOrEmpty(itemId).orElse(Items.AIR);
-                if (item != Items.AIR) rule.items.add(item);
+                if (itemId != null) {
+                    Item item = Registries.ITEM.get(itemId);
+                    if (item != null && item != Items.AIR) {
+                        rule.items.add(item);
+                    }
+                }
             }
         }
 
