@@ -1,14 +1,10 @@
-// settings.gradle
 pluginManagement {
     repositories {
-        // 1. ADD the Fabric repository for plugins FIRST
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
-        // 2. Keep the standard Gradle plugin portal
         gradlePluginPortal()
     }
 }
-
 rootProject.name = 'SimpleCit'
