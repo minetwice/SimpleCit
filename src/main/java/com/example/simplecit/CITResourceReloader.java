@@ -20,16 +20,12 @@ public class CITResourceReloader implements SimpleSynchronousResourceReloadListe
 
     @Override
     public void reload(ResourceManager manager) {
-        // FIX: apply() method ab nahi hai, reload() use hota hai
         CITManager.clearRules();
 
-        // FIX: findResources() ab Map<Identifier, Resource> return karta hai
         Map<Identifier, Resource> resources = manager.findResources("optifine/cit", 
             id -> id.getPath().endsWith(".properties"));
 
         resources.forEach((id, resource) -> {
-            // FIX: resourceRef.getReader().read() ab nahi hai
-            // resource.getInputStream() use karein
             try (InputStream is = resource.getInputStream()) {
                 Properties props = new Properties();
                 props.load(is);
