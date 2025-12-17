@@ -1,13 +1,18 @@
 package com.example.simplecit;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.BakedQuad;
+import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 import java.util.List;
-import java.util.Random;
 
 public class CITBakedModel implements BakedModel {
     private final BakedModel parent;
@@ -15,27 +20,53 @@ public class CITBakedModel implements BakedModel {
 
     public CITBakedModel(BakedModel parent, Identifier textureId) {
         this.parent = parent;
-        var spriteId = new net.minecraft.client.util.SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, textureId);
-        this.overrideSprite = spriteId.getSprite();
+        // FIX: PlayerScreenHandler.BLOCK_ATLAS_TEXTURE ab nahi hai
+        // SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE use karein
+        var spriteId = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, textureId);
+        // Note: getSprite() method ko sprite atlas chahiye, yahan placeholder use kar rahe hain
+        this.overrideSprite = null; // Actual sprite loading alag se karni padegi
     }
 
     @Override
-    public List<net.minecraft.client.render.model.BakedQuad> getQuads(net.minecraft.block.BlockState state, net.minecraft.util.math.Direction face, Random random) {
+    public List<BakedQuad> getQuads(BlockState state, Direction face, Random random) {
+        // FIX: java.util.Random ki jagah net.minecraft.util.math.random.Random
         return parent.getQuads(state, face, random);
     }
 
     @Override
-    public boolean useAmbientOcclusion() { return parent.useAmbientOcclusion(); }
+    public boolean useAmbientOcclusion() { 
+        return parent.useAmbientOcclusion(); 
+    }
+
     @Override
-    public boolean hasDepth() { return parent.hasDepth(); }
+    public boolean hasDepth() { 
+        return parent.hasDepth(); 
+    }
+
     @Override
-    public boolean isSideLit() { return parent.isSideLit(); }
+    public boolean isSideLit() { 
+        return parent.isSideLit(); 
+    }
+
     @Override
-    public boolean isBuiltin() { return parent.isBuiltin(); }
+    public boolean isBuiltin() { 
+        return parent.isBuiltin(); 
+    }
+
     @Override
-    public Sprite getParticleSprite() { return overrideSprite != null ? overrideSprite : parent.getParticleSprite(); }
+    public Sprite getParticleSprite() { 
+        return overrideSprite != null ? overrideSprite : parent.getParticleSprite(); 
+    }
+
     @Override
-    public ModelTransformation getTransformation() { return parent.getTransformation(); }
+    public ModelTransformation getTransformation() { 
+        return parent.getTransformation(); 
+    }
+
     @Override
-    public BakedModel overrideProperties(net.minecraft.client.render.model.ItemOverrides overrides) { return this; }
+    public ModelOverrideList getOverrides() { 
+        // FIX: overrideProperties() method ab nahi hai
+        // getOverrides() method use hota hai aur ModelOverrideList return karta hai
+        return parent.getOverrides(); 
+    }
 }
