@@ -1,24 +1,42 @@
 name: Build SimpleCIT
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
-      - uses: actions/setup-java@v4
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - run: ./gradlew build
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-      - uses: actions/upload-artifact@v4
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          dependency-cache-enabled: true
+          wrapper-cache-enabled: true
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload mod JAR
+        uses: actions/upload-artifact@v4
         with:
           name: SimpleCIT-1.21.4
-          path: build/libs/*-dev.jar
+          path: |
+            build/libs/*-dev.jar
+            build/libs/*-sources.jar
