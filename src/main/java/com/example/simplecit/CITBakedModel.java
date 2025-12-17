@@ -3,6 +3,7 @@ package com.example.simplecit;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -45,5 +46,10 @@ public class CITBakedModel implements BakedModel {
     @Override
     public Sprite getParticleSprite() {
         return overrideSprite != null ? overrideSprite : parent.getParticleSprite();
+    }
+
+    @Override
+    public ModelTransformation getTransformation() {
+        return parent.getTransformation();
     }
 }
