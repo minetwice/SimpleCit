@@ -22,7 +22,9 @@ public class CITRule {
             NbtCompound display = nbt.getCompound("display");
             if (display.contains("Name", 8)) {
                 try {
-                    Text name = Text.Serializer.fromJson(display.getString("Name"));
+                    // FIX: Text.Serializer.fromJson() ab nahi hai
+                    // Minecraft 1.21+ mein Text.Serialization.fromJson() use hota hai
+                    Text name = Text.Serialization.fromJson(display.getString("Name"), null);
                     if (name != null) {
                         String nameStr = name.getString();
                         return Pattern.compile(requiredNamePattern, Pattern.CASE_INSENSITIVE)
@@ -45,8 +47,14 @@ public class CITRule {
         if (itemsStr != null) {
             for (String id : itemsStr.split(",")) {
                 Identifier itemId = Identifier.tryParse(id.trim());
-                Item item = Registries.ITEM.getOrEmpty(itemId).orElse(Items.AIR);
-                if (item != Items.AIR) rule.items.add(item);
+                // FIX: getOrEmpty() ab nahi hai
+                // Minecraft 1.21+ mein seedha get() use karte hain
+                if (itemId != null) {
+                    Item item = Registries.ITEM.get(itemId);
+                    if (item != null && item != Items.AIR) {
+                        rule.items.add(item);
+                    }
+                }
             }
         }
 
