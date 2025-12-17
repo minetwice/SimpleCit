@@ -1,27 +1,29 @@
-name: Build SimpleCIT
+name: Build
 
-on: [push, workflow_dispatch]
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup JDK 21
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-          
-      - name: Make gradlew executable
+      
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        
-      - name: Build
+      
+      - name: Build with Gradle
         run: ./gradlew build --no-daemon
-        
-      - name: Upload JAR
+      
+      # JAR FILE UPLOAD - YE ADD KARO
+      - name: Upload JAR as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SimpleCIT-1.21.4
-          path: build/libs/*-dev.jar
+          name: SimpleCit-JAR
+          path: build/libs/*.jar
