@@ -3,19 +3,22 @@
   "id": "simplecit",
   "version": "${version}",
   "name": "SimpleCIT",
-  "description": "OptiFine CIT for Fabric 1.21.4",
-  "authors": ["You"],
+  "description": "A simple Custom Item Textures mod",
+  "authors": ["YourName"],
+  "contact": {},
   "license": "MIT",
+  "icon": "assets/simplecit/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["com.example.simplecit.SimpleCIT"]
+    "main": [
+      "com.example.simplecit.SimpleCitMod"
+    ]
   },
-  "mixins": [
-    "cit.mixins.json"
-  ],
+  "mixins": [],
   "depends": {
-    "fabricloader": ">=0.15.0",
-    "minecraft": "1.21.4",
-    "java": ">=21"
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
   }
 }
