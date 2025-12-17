@@ -1,9 +1,8 @@
 plugins {
-    id 'fabric-loom' version '1.7' apply false
+    id 'java'
     id 'maven-publish'
 }
 
-// Apply Loom after adding repositories
 apply plugin: 'fabric-loom'
 
 version = project.mod_version
@@ -15,6 +14,10 @@ repositories {
         name = 'Fabric'
         url = 'https://maven.fabricmc.net/'
     }
+    maven {
+        name = 'Loom Snapshots'
+        url = 'https://maven.loomdev.org/snapshots/'
+    }
 }
 
 dependencies {
@@ -22,6 +25,10 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/simplecit.accesswidener")
 }
 
 processResources {
