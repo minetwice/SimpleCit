@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright 2025 [Your Name]
+# Copyright 2025 [Minetwice]
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,40 +23,23 @@ PRG="$0"
 while [ -h "$PRG" ]; do
   ls=$(ls -ld "$PRG")
   link=$(expr "$ls" : '.*-> \(.*\)$')
-  if expr "$link" : '/.*' > /dev/null; then
+  if expr "$link" : '/.*' >/dev/null; then
     PRG="$link"
   else
     PRG=$(dirname "$PRG")/"$link"
   fi
 done
 SAVED_PWD="$PWD"
-cd "$(dirname "$PRG")" >/dev/null
+cd "$(dirname "$PRG")" >/dev/null || exit
 APP_HOME="$PWD"
 cd "$SAVED_PWD" >/dev/null
 
 CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
 if [ ! -f "$CLASSPATH" ]; then
-  echo "ERROR: Gradle wrapper JAR not found at: $CLASSPATH"
-  echo "Please run './gradlew wrapper' locally to generate it."
+  echo "ERROR: gradle-wrapper.jar not found at: $CLASSPATH"
   exit 1
 fi
 
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
-
-if [ -n "$JAVA_HOME" ]; then
-  JAVACMD="$JAVA_HOME/bin/java"
-  if [ ! -x "$JAVACMD" ]; then
-    echo "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME"
-    exit 1
-  fi
-else
-  JAVACMD=java
-  if ! command -v java >/dev/null 2>&1; then
-    echo "ERROR: JAVA_HOME is not set and 'java' command not found in PATH."
-    exit 1
-  fi
-fi
-
-# Execute Gradle Wrapper
-exec "$JAVACMD" $DEFAULT_JVM_OPTS -cp "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+# ✅ Critical Fix: JVM opts unquoted, passed as array
+exec java -Xmx64m -Xms64m -cp "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
