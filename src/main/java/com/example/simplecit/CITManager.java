@@ -22,11 +22,8 @@ public class CITManager {
 
     public static Identifier getOverrideTexture(ItemStack stack) {
         for (CITRule rule : RULES) {
-            // FIX: stack.getNbt() ab deprecated hai
-            // Minecraft 1.21+ mein Components system use hota hai
             NbtCompound nbt = null;
             
-            // Custom data component se NBT extract karein
             if (stack.contains(DataComponentTypes.CUSTOM_DATA)) {
                 NbtComponent nbtComponent = stack.get(DataComponentTypes.CUSTOM_DATA);
                 if (nbtComponent != null) {
