@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CITManager {
-    private static final List<CITRule> RULES = new ArrayList<>();
+    // CHANGE: private se public kar diya
+    public static final List<CITRule> RULES = new ArrayList<>();
 
     public static void clearRules() {
         RULES.clear();
