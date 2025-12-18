@@ -4,17 +4,18 @@
   "version": "${version}",
   "name": "SimpleCIT",
   "description": "A simple Custom Item Textures mod",
-  "authors": ["YourName"],
+  "authors": ["minetwice"],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/simplecit/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.simplecit.SimpleCitMod"
+      "com.example.simplecit.SimpleCIT"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "simplecit.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.16.0",
     "minecraft": "~1.21.4",
