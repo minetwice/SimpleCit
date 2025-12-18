@@ -10,7 +10,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.simplecit.SimpleCitMod"
+      "com.example.simplecit.SimpleCIT"
     ]
   },
   "mixins": [
