@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "SimpleCIT",
   "description": "A simple Custom Item Textures mod",
-  "authors": ["YourName"],
+  "authors": ["minetwice"],
   "contact": {},
   "license": "MIT",
   "environment": "*",
