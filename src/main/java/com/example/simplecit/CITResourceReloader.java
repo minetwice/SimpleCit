@@ -18,34 +18,35 @@ public class CITResourceReloader implements SimpleSynchronousResourceReloadListe
         return Identifier.of("simplecit", "cit_reloader");
     }
 
-@Override
-public void reload(ResourceManager manager) {
-    CITManager.clearRules();
-    
-    Map<Identifier, Resource> resources = manager.findResources("optifine/cit", 
-        id -> id.getPath().endsWith(".properties"));
+    @Override
+    public void reload(ResourceManager manager) {
+        CITManager.clearRules();
 
-    SimpleCIT.LOGGER.info("Found {} CIT property files", resources.size());
+        Map<Identifier, Resource> resources = manager.findResources("optifine/cit", 
+            id -> id.getPath().endsWith(".properties"));
 
-    resources.forEach((id, resource) -> {
-        try (InputStream is = resource.getInputStream()) {
-            Properties props = new Properties();
-            props.load(is);
+        SimpleCIT.LOGGER.info("Found {} CIT property files", resources.size());
 
-            SimpleCIT.LOGGER.info("Loading CIT: {}", id);
+        resources.forEach((id, resource) -> {
+            try (InputStream is = resource.getInputStream()) {
+                Properties props = new Properties();
+                props.load(is);
 
-            String namespace = id.getNamespace();
-            CITRule rule = CITRule.fromProperties(props, namespace);
-            if (rule != null) {
-                CITManager.addRule(rule);
-                SimpleCIT.LOGGER.info("Added CIT rule with {} items", rule.items.size());
-            } else {
-                SimpleCIT.LOGGER.warn("Failed to parse CIT rule: {}", id);
+                SimpleCIT.LOGGER.info("Loading CIT: {}", id);
+
+                String namespace = id.getNamespace();
+                CITRule rule = CITRule.fromProperties(props, namespace);
+                if (rule != null) {
+                    CITManager.addRule(rule);
+                    SimpleCIT.LOGGER.info("Added CIT rule with {} items", rule.items.size());
+                } else {
+                    SimpleCIT.LOGGER.warn("Failed to parse CIT rule: {}", id);
+                }
+            } catch (IOException e) {
+                SimpleCIT.LOGGER.error("Error loading CIT: {}", id, e);
             }
-        } catch (IOException e) {
-            SimpleCIT.LOGGER.error("Error loading CIT: {}", id, e);
-        }
-    });
-    
-    SimpleCIT.LOGGER.info("Loaded {} CIT rules total", CITManager.RULES.size());
+        });
+        
+        SimpleCIT.LOGGER.info("Loaded {} CIT rules total", CITManager.RULES.size());
+    }
 }
