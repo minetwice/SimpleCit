@@ -4,13 +4,13 @@
   "version": "${version}",
   "name": "SimpleCIT",
   "description": "A simple Custom Item Textures mod",
-  "authors": ["minetwice"],
+  "authors": ["YourName"],
   "contact": {},
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.simplecit.SimpleCIT"
+      "com.example.simplecit.SimpleCitMod"
     ]
   },
   "mixins": [
