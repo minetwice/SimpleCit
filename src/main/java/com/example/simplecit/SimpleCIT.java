@@ -6,8 +6,7 @@ import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Class name ko SimpleCitMod kar do (file name ke according)
-public class SimpleCitMod implements ModInitializer {
+public class SimpleCIT implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("simplecit");
 
     @Override
